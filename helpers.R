@@ -134,17 +134,17 @@ rank_team <- function(types_condensed) {
         def1 <- member$DefendingTypes[1]
         def_type1 <- names(member$DefendingTypes[1])
         def1_ <- str_pad(def1, side = 'both', width = nchar(def_type1), pad = ' ')
-        def1 <- case_when(def1 > 1 ~ green(def1_),
+        def1 <- case_when(def1 > 1 ~ red(def1_),
                           def1 == 1 ~ silver(def1_),
-                          def1 < 1 ~ red(def1_))
+                          def1 < 1 ~ green(def1_))
 
         if(length(member$DefendingTypes) == 2){
             def2 <- member$DefendingTypes[2]
             def_type2 <- names(member$DefendingTypes[2])
             def2_ <- str_pad(def2, side = 'both', width = nchar(def_type2), pad = ' ')
-            def2 <- case_when(def2 > 1 ~ green(def2_),
+            def2 <- case_when(def2 > 1 ~ red(def2_),
                               def2 == 1 ~ silver(def2_),
-                              def2 < 1 ~ red(def2_))
+                              def2 < 1 ~ green(def2_))
         }
 
         cat(paste0(blue(member$Pokemon), ' (', tot, ')\n'))
@@ -165,7 +165,7 @@ rank_team <- function(types_condensed) {
 type_lookup_def <- function(name){
 
     types <- filter(all_types, Name == tolower(name)) %>%
-        select(-Name) %>%
+        select(starts_with('Type')) %>%
         unlist(use.names = FALSE)
 
     short_form <- paste(names(quick_mapping[quick_mapping %in% types]), collapse = '')
@@ -225,7 +225,7 @@ rank_team2 <- function(def_types_condensed, atk_types_condensed) {
     type3_atk <- unname(quick_mapping[names(quick_mapping) == type3_atk])
 
     enemy_def_types <- unique(c(type1_def, type2_def))
-    enemy_atk_types <- unique(c(type1_atk, type2_atk, type3_atk))
+    enemy_atk_types <- c(type1_atk, type2_atk, type3_atk)
 
     #compare our atk to their def, vice-versa
     rankings <- lapply(names(team_atk), function(pokemon) {
@@ -235,7 +235,7 @@ rank_team2 <- function(def_types_condensed, atk_types_condensed) {
         atk_score_total <- mean(atk_scores_comparable, na.rm = TRUE)
 
         def_scores <- def_effectiveness(team_def[[pokemon]], enemy_atk_types)
-        def_scores_comparable <- c(def_scores[1], mean(def_scores[2:length(def_scores)]))
+        def_scores_comparable <- c(def_scores[1], max(def_scores[2:length(def_scores)]))
         def_score_total <- mean(def_scores_comparable, na.rm = TRUE)
 
         list(
@@ -312,24 +312,24 @@ rank_team2 <- function(def_types_condensed, atk_types_condensed) {
         def1 <- member$DefendingTypes[1]
         def_type1 <- names(member$DefendingTypes[1])
         def1_ <- str_pad(def1, side = 'both', width = nchar(def_type1), pad = ' ')
-        def1 <- case_when(def1 > 1 ~ green(def1_),
+        def1 <- case_when(def1 > 1 ~ red(def1_),
                           def1 == 1 ~ silver(def1_),
-                          def1 < 1 ~ red(def1_))
+                          def1 < 1 ~ green(def1_))
 
         def2 <- member$DefendingTypes[2]
         def_type2 <- names(member$DefendingTypes[2])
         def2_ <- str_pad(def2, side = 'both', width = nchar(def_type2), pad = ' ')
-        def2 <- case_when(def2 > 1 ~ green(def2_),
+        def2 <- case_when(def2 > 1 ~ red(def2_),
                           def2 == 1 ~ silver(def2_),
-                          def2 < 1 ~ red(def2_))
+                          def2 < 1 ~ green(def2_))
 
         if(length(member$DefendingTypes) == 3){
             def3 <- member$DefendingTypes[3]
             def_type3 <- names(member$DefendingTypes[3])
             def3_ <- str_pad(def3, side = 'both', width = nchar(def_type3), pad = ' ')
-            def3 <- case_when(def3 > 1 ~ green(def3_),
+            def3 <- case_when(def3 > 1 ~ red(def3_),
                               def3 == 1 ~ silver(def3_),
-                              def3 < 1 ~ red(def3_))
+                              def3 < 1 ~ green(def3_))
         }
 
         if(member$Pokemon == names(team_def)[1]){

@@ -1,8 +1,6 @@
 # TODO:
 #adjust scoring?
-#warning when type not found!
 #verify atk/def weights
-#change defense rating to assume they'll use strongest move?
 
 library(dplyr)
 library(readr)
@@ -28,42 +26,45 @@ source('helpers.R')
 
 #attacking type effectiveness chart
 atk_chart <- list(
-    Fairy = c(Dragon = 1.6, Dark = 1.6, Fighting = 1.6, Steel = 0.62, Poison = 0.62, Fire = 0.62),
-    Normal = c(Ghost = 0.39, Rock = 0.62, Steel = 0.62),
+    Bug = c(), #
+    Dark = c(Psychic = 1.6, Ghost = 1.6, Fighting = 0.625, Dark = 0.625, Fairy = 0.625),
+    Dragon = c(), #
     Electric = c(Water = 1.6, Flying = 1.6, Ground = 0.39),
-    Psychic = c(Fighting = 1.6, Poison = 1.6, Dark = 0.39, Steel = 0.62, Psychic = 0.62),
-    Dark = c(Psychic = 1.6, Ghost = 1.6, Fighting = 0.62, Dark = 0.62, Fairy = 0.62),
-    Poison = c(Fairy = 1.6, Grass = 1.6, Ground = 0.62, Rock = 0.62, Ghost = 0.62, Poison = 0.62, Steel = 0.39),
-    Rock = c(Flying = 1.6, Bug = 1.6, Fire = 1.6, Ice = 1.6, Fighting = 0.62, Ground = 0.62, Steel = 0.62),
-    Ground = c(Electric = 1.6, Fire = 1.6, Rock = 1.6, Poison = 1.6, Steel = 1.6, Flying = 0.39, Grass = 0.62, Bug = 0.62),
-    Steel = c(Ice = 1.6, Rock = 1.6, Fairy = 1.6, Fire = 0.62, Water = 0.62, Electric = 0.62, Steel = 0.62),
-    Ice = c(Dragon = 1.6, Flying = 1.6, Grass = 1.6, Ground = 1.6, Fire = 0.62, Ice = 0.62, Steel = 0.62, Water = 0.62),
-    Fighting = c(Dark = 1.6, Ice = 1.6, Normal = 1.6, Rock = 1.6, Steel = 1.6, Bug = 0.62, Fairy = 0.62, Flying = 0.62, Ghost = 0.39, Poison = 0.62, Psychic = 0.62),
-    Water = c(Fire = 1.6, Ground = 1.6, Rock = 1.6, Dragon = 0.62, Grass = 0.62, Water = 0.62),
-    Grass = c(Ground = 1.6, Rock = 1.6, Water = 1.6, Bug = 0.62, Dragon = 0.62, Fire = 0.62, Flying = 0.62, Grass = 0.62, Poison = 0.62, Steel = 0.62),
-    Ghost = c(Ghost = 1.6, Psychic = 1.6, Dark = 0.62, Normal = 0.39)
+    Fairy = c(Dragon = 1.6, Dark = 1.6, Fighting = 1.6, Steel = 0.625, Poison = 0.625, Fire = 0.625),
+    Fighting = c(Dark = 1.6, Ice = 1.6, Normal = 1.6, Rock = 1.6, Steel = 1.6, Bug = 0.625, Fairy = 0.625, Flying = 0.625, Ghost = 0.39, Poison = 0.625, Psychic = 0.625),
+    Fire = c(), #
+    Flying = c(), #
+    Ghost = c(Ghost = 1.6, Psychic = 1.6, Dark = 0.625, Normal = 0.39),
+    Grass = c(Ground = 1.6, Rock = 1.6, Water = 1.6, Bug = 0.625, Dragon = 0.625, Fire = 0.625, Flying = 0.625, Grass = 0.625, Poison = 0.625, Steel = 0.625),
+    Ground = c(Electric = 1.6, Fire = 1.6, Rock = 1.6, Poison = 1.6, Steel = 1.6, Flying = 0.39, Grass = 0.625, Bug = 0.625),
+    Ice = c(Dragon = 1.6, Flying = 1.6, Grass = 1.6, Ground = 1.6, Fire = 0.625, Ice = 0.625, Steel = 0.625, Water = 0.625),
+    Normal = c(Ghost = 0.39, Rock = 0.625, Steel = 0.625),
+    Poison = c(Fairy = 1.6, Grass = 1.6, Ground = 0.625, Rock = 0.625, Ghost = 0.625, Poison = 0.625, Steel = 0.39),
+    Psychic = c(Fighting = 1.6, Poison = 1.6, Dark = 0.39, Steel = 0.625, Psychic = 0.625),
+    Rock = c(Flying = 1.6, Bug = 1.6, Fire = 1.6, Ice = 1.6, Fighting = 0.625, Ground = 0.625, Steel = 0.625),
+    Steel = c(Ice = 1.6, Rock = 1.6, Fairy = 1.6, Fire = 0.625, Water = 0.625, Electric = 0.625, Steel = 0.625),
+    Water = c(Fire = 1.6, Ground = 1.6, Rock = 1.6, Dragon = 0.625, Grass = 0.625, Water = 0.625)
 )
 
 def_chart <- list(
-    Bug = c(Fire = 1.6, Flying = 1.6, Rock = 1.6, Fighting = 0.62, Grass = 0.62, Ground = 0.62),
-    Dark = c(Bug = 1.6, Fairy = 1.6, Fighting = 1.6, Dark = 0.62, Ghost = 0.62, Psychic = 0.39),
-    Dragon = c(Dragon = 1.6, Fairy = 1.6, Ice = 1.6, Electric = 0.62, Fire = 0.62, Grass = 0.62, Water = 0.62),
-    Electric = c(Ground = 1.6, Electric = 0.62, Flying = 0.62, Steel = 0.62),
-    Fairy = c(Poison = 1.6, Steel = 1.6, Bug = 0.62, Dark = 0.62, Dragon = 0.39, Fighting = 0.62),
-    Fighting = c(Fairy = 1.6, Flying = 1.6, Psychic = 1.6, Bug = 0.62, Dark = 0.62, Rock = 0.62),
-    Fire = c(Ground = 1.6, Rock = 1.6, Water = 1.6, Bug = 0.62, Fairy = 0.62, Grass = 0.62, Ice = 0.62, Steel = 0.62),
-    Flying = c(Electric = 1.6, Ice = 1.6, Rock = 1.6, Bug = 0.62, Fighting = 0.62, Normal = 0.39, Poison = 0.62),
-    Ghost = c(Dark = 1.6, Ghost = 1.6, Bug = 0.62, Fighting = 0.39, Normal = 0.39, Poison = 0.62),
-    Grass = c(Bug = 1.6, Fire = 1.6, Flying = 1.6, Ice = 1.6, Poison = 1.6, Electric = 0.62, Grass = 0.62, Ground = 0.62, Water = 0.62),
-    Ground = c(Grass = 1.6, Ice = 1.6, Water = 1.6, Electric = 0.39, Poison = 0.62, Rock = 0.62),
-    Ice = c(Fighting = 1.6, Fire = 1.6, Rock = 1.6, Steel = 1.6, Ice = 0.62),
+    Bug = c(Fire = 1.6, Flying = 1.6, Rock = 1.6, Fighting = 0.625, Grass = 0.625, Ground = 0.625),
+    Dark = c(Bug = 1.6, Fairy = 1.6, Fighting = 1.6, Dark = 0.625, Ghost = 0.625, Psychic = 0.39),
+    Dragon = c(Dragon = 1.6, Fairy = 1.6, Ice = 1.6, Electric = 0.625, Fire = 0.625, Grass = 0.625, Water = 0.625),
+    Electric = c(Ground = 1.6, Electric = 0.625, Flying = 0.625, Steel = 0.625),
+    Fairy = c(Poison = 1.6, Steel = 1.6, Bug = 0.625, Dark = 0.625, Dragon = 0.39, Fighting = 0.625),
+    Fighting = c(Fairy = 1.6, Flying = 1.6, Psychic = 1.6, Bug = 0.625, Dark = 0.625, Rock = 0.625),
+    Fire = c(Ground = 1.6, Rock = 1.6, Water = 1.6, Bug = 0.625, Fairy = 0.625, Grass = 0.625, Ice = 0.625, Steel = 0.625),
+    Flying = c(Electric = 1.6, Ice = 1.6, Rock = 1.6, Bug = 0.625, Fighting = 0.625, Grass = 0.625, Ground = 0.39),
+    Ghost = c(Dark = 1.6, Ghost = 1.6, Bug = 0.625, Fighting = 0.39, Normal = 0.39, Poison = 0.625),
+    Grass = c(Bug = 1.6, Fire = 1.6, Flying = 1.6, Ice = 1.6, Poison = 1.6, Electric = 0.625, Grass = 0.625, Ground = 0.625, Water = 0.625),
+    Ground = c(Grass = 1.6, Ice = 1.6, Water = 1.6, Electric = 0.39, Poison = 0.625, Rock = 0.625),
+    Ice = c(Fighting = 1.6, Fire = 1.6, Rock = 1.6, Steel = 1.6, Ice = 0.625),
     Normal = c(Fighting = 1.6, Ghost = 0.39),
-    Psychic = c(Bug = 1.6, Dark = 1.6, Ghost = 1.6, Fighting = 0.62, Psychic = 0.62),
-    Poison = c(Ground = 1.6, Psychic = 1.6, Bug = 0.62, Fairy = 0.62, Fighting = 0.62, Grass = 0.62, Poison = 0.62),
-    Psychic = c(Bug = 1.6, Dark = 1.6, Ghost = 1.6, Fighting = 0.62, Psychic = 0.62),
-    Rock = c(Fighting = 1.6, Grass = 1.6, Ground = 1.6, Steel = 1.6, Water = 1.6, Fire = 0.62, Flying = 0.62, Normal = 0.62, Poison = 0.62),
-    Steel = c(Fighting = 1.6, Fire = 1.6, Ground = 1.6, Bug = 0.62, Dragon = 0.62, Fairy = 0.62, Flying = 0.62, Grass = 0.62, Ice = 0.62, Normal = 0.62, Poison = 0.39, Psychic = 0.62, Rock = 0.62, Steel = 0.62),
-    Water = c(Electric = 1.6, Grass = 1.6, Fire = 0.62, Ice = 0.62, Steel = 0.62, Water = 0.62)
+    Psychic = c(Bug = 1.6, Dark = 1.6, Ghost = 1.6, Fighting = 0.625, Psychic = 0.625),
+    Poison = c(Ground = 1.6, Psychic = 1.6, Bug = 0.625, Fairy = 0.625, Fighting = 0.625, Grass = 0.625, Poison = 0.625),
+    Rock = c(Fighting = 1.6, Grass = 1.6, Ground = 1.6, Steel = 1.6, Water = 1.6, Fire = 0.625, Flying = 0.625, Normal = 0.625, Poison = 0.625),
+    Steel = c(Fighting = 1.6, Fire = 1.6, Ground = 1.6, Bug = 0.625, Dragon = 0.625, Fairy = 0.625, Flying = 0.625, Grass = 0.625, Ice = 0.625, Normal = 0.625, Poison = 0.39, Psychic = 0.625, Rock = 0.625, Steel = 0.625),
+    Water = c(Electric = 1.6, Grass = 1.6, Fire = 0.625, Ice = 0.625, Steel = 0.625, Water = 0.625)
 )
 
 quick_mapping <- c(gr = 'Grass',
@@ -111,4 +112,3 @@ team_def <- list(
 
 rank_team(      'icst')
 hax(autocomplete(`feraligatr (shadow)` =  T))
-hax(autocomplete(T))
