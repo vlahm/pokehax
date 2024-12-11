@@ -11,14 +11,14 @@ setwd('~/git/pokehax')
 
 # setup ####
 
-all_types <- read_csv('data/ul.csv') %>%
+all_types <- read_csv('data/ul.csv', show_col_types = FALSE) %>%
     rename(Name = Pokemon) %>%
     mutate(Name = tolower(Name),
            `Type 2` = if_else(`Type 2` == 'none', '', `Type 2`),
            `Type 1` = str_to_sentence(`Type 1`),
            `Type 2` = str_to_sentence(`Type 2`))
 
-moves <- read_csv('data/moves.csv')
+moves <- read_csv('data/moves.csv', show_col_types = FALSE)
 
 source('helpers.R')
 
@@ -26,14 +26,14 @@ source('helpers.R')
 
 #attacking type effectiveness chart
 atk_chart <- list(
-    Bug = c(), #
+    Bug = c(Dark = 1.6, Grass = 1.6, Psychic = 1.6, Fairy = 0.625, Fighting = 0.625, Fire = 0.625, Flying = 0.625, Ghost = 0.625, Poison = 0.625, Steel = 0.625),
     Dark = c(Psychic = 1.6, Ghost = 1.6, Fighting = 0.625, Dark = 0.625, Fairy = 0.625),
-    Dragon = c(), #
+    Dragon = c(Dragon = 1.6, Fairy = 0.39, Steel = 0.625),
     Electric = c(Water = 1.6, Flying = 1.6, Ground = 0.39),
     Fairy = c(Dragon = 1.6, Dark = 1.6, Fighting = 1.6, Steel = 0.625, Poison = 0.625, Fire = 0.625),
     Fighting = c(Dark = 1.6, Ice = 1.6, Normal = 1.6, Rock = 1.6, Steel = 1.6, Bug = 0.625, Fairy = 0.625, Flying = 0.625, Ghost = 0.39, Poison = 0.625, Psychic = 0.625),
-    Fire = c(), #
-    Flying = c(), #
+    Fire = c(Bug = 1.6, Grass = 1.6, Ice = 1.6, Steel = 1.6, Dragon = 0.625, Fire = 0.625, Rock = 0.625, Water = 0.625),
+    Flying = c(Bug = 1.6, Fighting = 1.6, Grass = 1.6, Electric = 0.625, Rock = 0.625, Steel = 0.625),
     Ghost = c(Ghost = 1.6, Psychic = 1.6, Dark = 0.625, Normal = 0.39),
     Grass = c(Ground = 1.6, Rock = 1.6, Water = 1.6, Bug = 0.625, Dragon = 0.625, Fire = 0.625, Flying = 0.625, Grass = 0.625, Poison = 0.625, Steel = 0.625),
     Ground = c(Electric = 1.6, Fire = 1.6, Rock = 1.6, Poison = 1.6, Steel = 1.6, Flying = 0.39, Grass = 0.625, Bug = 0.625),
@@ -108,7 +108,3 @@ team_def <- list(
     Clodsire = c('Poison', 'Ground')
 )
 
-# battle zone ####
-
-rank_team(      'icst')
-hax(autocomplete(`feraligatr (shadow)` =  T))
