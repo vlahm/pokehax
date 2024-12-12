@@ -1,6 +1,6 @@
 # TODO:
 #adjust scoring?
-#verify atk/def weights
+#consider filtering Shadow varietals
 
 library(dplyr)
 library(readr)
@@ -13,6 +13,7 @@ setwd('~/git/pokehax')
 
 all_types <- read_csv('data/ul.csv', show_col_types = FALSE) %>%
     rename(Name = Pokemon) %>%
+    # filter(! grepl('(Shadow)', Name)) %>%
     mutate(Name = tolower(Name),
            `Type 2` = if_else(`Type 2` == 'none', '', `Type 2`),
            `Type 1` = str_to_sentence(`Type 1`),
@@ -22,14 +23,12 @@ moves <- read_csv('data/moves.csv', show_col_types = FALSE)
 
 source('helpers.R')
 
-# config ####
-
 #attacking type effectiveness chart
 atk_chart <- list(
     Bug = c(Dark = 1.6, Grass = 1.6, Psychic = 1.6, Fairy = 0.625, Fighting = 0.625, Fire = 0.625, Flying = 0.625, Ghost = 0.625, Poison = 0.625, Steel = 0.625),
     Dark = c(Psychic = 1.6, Ghost = 1.6, Fighting = 0.625, Dark = 0.625, Fairy = 0.625),
     Dragon = c(Dragon = 1.6, Fairy = 0.39, Steel = 0.625),
-    Electric = c(Water = 1.6, Flying = 1.6, Ground = 0.39),
+    Electric = c(Water = 1.6, Flying = 1.6, Ground = 0.39, Dragon = 0.625, Electric = 0.625, Grass = 0.625),
     Fairy = c(Dragon = 1.6, Dark = 1.6, Fighting = 1.6, Steel = 0.625, Poison = 0.625, Fire = 0.625),
     Fighting = c(Dark = 1.6, Ice = 1.6, Normal = 1.6, Rock = 1.6, Steel = 1.6, Bug = 0.625, Fairy = 0.625, Flying = 0.625, Ghost = 0.39, Poison = 0.625, Psychic = 0.625),
     Fire = c(Bug = 1.6, Grass = 1.6, Ice = 1.6, Steel = 1.6, Dragon = 0.625, Fire = 0.625, Rock = 0.625, Water = 0.625),
@@ -68,8 +67,6 @@ def_chart <- list(
 )
 
 quick_mapping <- c(gr = 'Grass',
-                   le = 'Grass', ##
-                   pl = 'Grass', ##
                    fi = 'Fire',
                    wa = 'Water',
                    da = 'Dark',
@@ -78,7 +75,6 @@ quick_mapping <- c(gr = 'Grass',
                    bu = 'Bug',
                    fl = 'Flying',
                    el = 'Electric',
-                   li = 'Electric', ##
                    ro = 'Rock',
                    st = 'Steel',
                    ic = 'Ice',
@@ -89,7 +85,10 @@ quick_mapping <- c(gr = 'Grass',
                    fg = 'Fighting', #
                    dr = 'Dragon')
 
-#available attack types for each team member
+# config ####
+
+#GL
+
 team_atk <- list(
     Clefable = c("Fairy", "Normal", "Fairy"),
     # Poliwrath = c("Fighting", "Water", "Ice"),
@@ -106,5 +105,19 @@ team_def <- list(
     # Poliwrath = c('Water', 'Fighting'),
     # Leafeon = 'Grass',
     Clodsire = c('Poison', 'Ground')
+)
+
+#UL
+
+team_atk <- list(
+    Feraligatr = c('Ghost', 'Water', 'Ice'),
+    Typhlosion = c('Fire', 'Fire', 'Electric'),
+    Giratina = c('Ghost', 'Dragon', 'Ghost')
+)
+
+team_def <- list(
+    Feraligatr = c('Water'),
+    Typhlosion = c('Fire'),
+    Giratina = c('Ghost', 'Dragon')
 )
 
