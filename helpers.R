@@ -174,23 +174,44 @@ type_lookup_def <- function(name){
 
 type_lookup_atk <- function(name){
 
-    movetypes <- suppressMessages(filter(all_types, Name == tolower(name)) %>%
-                                      select(`Fast Move`:`Charged Move 2`) %>%
-                                      t() %>%
-                                      unname() %>%
-                                      as_tibble(.name_repair = 'unique') %>%
-                                      left_join(moves, by = c(`...1` = 'Move')) %>%
-                                      select(Type) %>%
-                                      unlist(use.names = FALSE))
+    moves <- suppressMessages(filter(all_types, Name == tolower(name)) %>%
+                                  select(`Fast Move`:`Charged Move 2`) %>%
+                                  t() %>%
+                                  unname() %>%
+                                  as_tibble(.name_repair = 'unique') %>%
+                                  left_join(moves, by = c(`...1` = 'Move')))
+
+    movetypes <- moves %>%
+        select(Type) %>%
+        unlist(use.names = FALSE)
 
     qm <- names(quick_mapping)
     names(qm) <- unname(quick_mapping)
     short_form <- paste(recode(movetypes, !!!qm), collapse = '')
 
-    return(short_form)
+    movestrengths <- moves %>%
+        filter(Category == 'Charged Attack') %>%
+        mutate(str = case_when(Damage > 90 ~ 'h',
+                               Damage < 70 ~ 'l',
+                               TRUE ~ 'm')) %>%
+        pull(str)
+
+    movespeeds <- moves %>%
+        filter(Category == 'Charged Attack') %>%
+        mutate(spd = case_when(Energy > 55 ~ 's',
+                               Energy < 45 ~ 'f',
+                               TRUE ~ 'm')) %>%
+        pull(spd)
+
+
+    out <- list(types = short_form,
+                strengths = movestrengths,
+                speeds = movespeeds)
+
+    return(out)
 }
 
-rank_team2 <- function(def_types_condensed, atk_types_condensed) {
+rank_team2 <- function(def_types_condensed, atk_types_condensed, atk_strengths, atk_speeds){
 
     dtyp <- def_types_condensed
     atyp <- atk_types_condensed
@@ -322,6 +343,9 @@ rank_team2 <- function(def_types_condensed, atk_types_condensed) {
         def2 <- case_when(def2 > 1 ~ red(def2_),
                           def2 == 1 ~ silver(def2_),
                           def2 < 1 ~ green(def2_))
+        def2 <- if_else(atk_strengths[1] == 'h', inverse(def2), def2)
+        def2 <- if_else(atk_strengths[1] == 'l', strikethrough(def2), def2)
+        def2 <- if_else(atk_speeds[1] == 'f', bold(def2), def2)
 
         if(length(member$DefendingTypes) == 3){
             def3 <- member$DefendingTypes[3]
@@ -330,6 +354,9 @@ rank_team2 <- function(def_types_condensed, atk_types_condensed) {
             def3 <- case_when(def3 > 1 ~ red(def3_),
                               def3 == 1 ~ silver(def3_),
                               def3 < 1 ~ green(def3_))
+            def3 <- if_else(atk_strengths[2] == 'h', inverse(def3), def3)
+            def3 <- if_else(atk_strengths[2] == 'l', strikethrough(def3), def3)
+            def3 <- if_else(atk_speeds[2] == 'f', bold(def3), def3)
         }
 
         if(member$Pokemon == names(team_def)[1]){
@@ -377,8 +404,23 @@ define_params <- function(param_names) {
 
 autocomplete <- define_params(param_names = all_types$Name)
 
+# hax <- function(name){
+#
+#     rank <- which(all_types$Name == name)
+#     cat(paste0(magenta(toupper(name)), ': rank ', rank, '\n'))
+#     rank_team2(type_lookup_def(name), type_lookup_atk(name))
+# }
 hax <- function(name){
+
     rank <- which(all_types$Name == name)
-    cat(paste0(magenta(toupper(name)), ': rank ', rank, '\n'))
-    rank_team2(type_lookup_def(name), type_lookup_atk(name))
+    stats <- filter(all_types, Name == !!name) %>%
+        select(Attack, Defense, Stamina) %>%
+        unlist()
+
+    cat(paste0(magenta(toupper(name)), ': rank ', rank, '; ',
+               magenta('Atk: '), stats[1], ', ', magenta('Def: '), stats[2], ', ',
+               magenta('Stm: '), stats[3], '\n'))
+
+    atk_deets <- type_lookup_atk(name)
+    rank_team2(type_lookup_def(name), atk_deets$types, atk_deets$strengths, atk_deets$speeds)
 }
