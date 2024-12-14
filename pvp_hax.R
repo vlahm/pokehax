@@ -110,14 +110,16 @@ team_def <- list(
 #UL
 
 team_atk <- list(
-    Feraligatr = c('Ghost', 'Water', 'Ice'),
-    Typhlosion = c('Fire', 'Fire', 'Electric'),
-    Giratina = c('Ghost', 'Dragon', 'Ghost')
+    Annihilape = c('Fighting', 'Ghost', 'Fighting'),
+    Giratina = c('Ghost', 'Dragon', 'Ghost'),
+    Feraligatr = c('Ghost', 'Water', 'Ice')
+    # Typhlosion = c('Fire', 'Fire', 'Electric'),
 )
 
 team_def <- list(
-    Feraligatr = c('Water'),
-    Typhlosion = c('Fire'),
-    Giratina = c('Ghost', 'Dragon')
+    Annihilape = c('Fighting', 'Ghost'),
+    Giratina = c('Ghost', 'Dragon'),
+    Feraligatr = c('Water')
+    # Typhlosion = c('Fire'),
 )
 

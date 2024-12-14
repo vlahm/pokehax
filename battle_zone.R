@@ -3,10 +3,12 @@
 source('pvp_hax.R')
 
 hax(autocomplete(`giratina (altered)` = T))
-
+hax(autocomplete(arcanine = T))
+hax(autocomplete(primarina = T))
 rank_team(      '')
-hax(autocomplete(T))
-hax(autocomplete(T))
+hax(autocomplete(chesnaught = T))
+hax(autocomplete(greninja = T))
+hax(autocomplete(skeledirge = T))
 hax(autocomplete(T))
 hax(autocomplete(T))
 hax(autocomplete(T))
@@ -19,6 +21,7 @@ hax(autocomplete(T))
 hax(autocomplete(T))
 
 #toughies
+guzzlord
 miltank
 greninja
 hax(autocomplete(snorlax = T))
