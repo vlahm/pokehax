@@ -1,18 +1,17 @@
 #fix liel etc.
 #cresselia insane def
+# can probs remove .995 fix
 source('pvp_hax.R')
 
-hax(autocomplete(`giratina (altered)` = T))
-hax(autocomplete(arcanine = T))
+#good teams?
+tapu fini
+cresselia
+giratina
+
 hax(autocomplete(primarina = T))
+hax(autocomplete(arcanine = T))
+hax(autocomplete(`giratina (altered)` = T))
 rank_team(      '')
-hax(autocomplete(chesnaught = T))
-hax(autocomplete(greninja = T))
-hax(autocomplete(skeledirge = T))
-hax(autocomplete(T))
-hax(autocomplete(T))
-hax(autocomplete(T))
-hax(autocomplete(T))
 hax(autocomplete(T))
 hax(autocomplete(T))
 hax(autocomplete(T))

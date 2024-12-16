@@ -52,7 +52,7 @@ def_chart <- list(
     Electric = c(Ground = 1.6, Electric = 0.625, Flying = 0.625, Steel = 0.625),
     Fairy = c(Poison = 1.6, Steel = 1.6, Bug = 0.625, Dark = 0.625, Dragon = 0.39, Fighting = 0.625),
     Fighting = c(Fairy = 1.6, Flying = 1.6, Psychic = 1.6, Bug = 0.625, Dark = 0.625, Rock = 0.625),
-    Fire = c(Ground = 1.6, Rock = 1.6, Water = 1.6, Bug = 0.625, Fairy = 0.625, Grass = 0.625, Ice = 0.625, Steel = 0.625),
+    Fire = c(Ground = 1.6, Rock = 1.6, Water = 1.6, Bug = 0.625, Fairy = 0.625, Grass = 0.625, Ice = 0.625, Steel = 0.625, Fire = 0.625),
     Flying = c(Electric = 1.6, Ice = 1.6, Rock = 1.6, Bug = 0.625, Fighting = 0.625, Grass = 0.625, Ground = 0.39),
     Ghost = c(Dark = 1.6, Ghost = 1.6, Bug = 0.625, Fighting = 0.39, Normal = 0.39, Poison = 0.625),
     Grass = c(Bug = 1.6, Fire = 1.6, Flying = 1.6, Ice = 1.6, Poison = 1.6, Electric = 0.625, Grass = 0.625, Ground = 0.625, Water = 0.625),
@@ -110,16 +110,16 @@ team_def <- list(
 #UL
 
 team_atk <- list(
-    Annihilape = c('Fighting', 'Ghost', 'Fighting'),
     Giratina = c('Ghost', 'Dragon', 'Ghost'),
+    Typhlosion = c('Fire', 'Fire', 'Electric'),
+    # Annihilape = c('Fighting', 'Ghost', 'Fighting'),
     Feraligatr = c('Ghost', 'Water', 'Ice')
-    # Typhlosion = c('Fire', 'Fire', 'Electric'),
 )
 
 team_def <- list(
-    Annihilape = c('Fighting', 'Ghost'),
     Giratina = c('Ghost', 'Dragon'),
+    Typhlosion = c('Fire'),
+    # Annihilape = c('Fighting', 'Ghost'),
     Feraligatr = c('Water')
-    # Typhlosion = c('Fire'),
 )
 
