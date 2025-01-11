@@ -407,7 +407,57 @@ hax(autocomplete(typhlosion =  T))
 hax(autocomplete(sylveon =  T))w
 hax(autocomplete(skeledirge =  T))
 hax(autocomplete(lickilicky =  T))
-hax(autocomplete(primarina =  T))l
+hax(autocomplete(primarina =  T))l(2/5)
+hax(autocomplete(drapion =  T))
+hax(autocomplete(feraligatr =  T))
+hax(autocomplete(clefable =  T))w
+hax(autocomplete(typhlosion =  T))
+hax(autocomplete(`muk (alolan)` =  T))
+hax(autocomplete(poliwrath =  T))w
+hax(autocomplete(obstagoon =  T))
+hax(autocomplete(granbull =  T))
+hax(autocomplete(tentacruel =  T))l
+hax(autocomplete(skeledirge =  T))
+hax(autocomplete(empoleon =  T))
+hax(autocomplete(decidueye =  T))w
+hax(autocomplete(gliscor =  T))
+hax(autocomplete(virizion =  T))
+hax(autocomplete(feraligatr =  T))l(3/5)
+hax(autocomplete(poliwrath =  T))
+hax(autocomplete(talonflame =  T))
+hax(autocomplete(swampert =  T))w
+hax(autocomplete(skeledirge =  T))
+hax(autocomplete(lickilicky =  T))
+hax(autocomplete(clefable =  T))w
+hax(autocomplete(primeape =  T))
+hax(autocomplete(tentacruel =  T))
+hax(autocomplete(talonflame =  T))w
+hax(autocomplete(annihilape =  T))
+hax(autocomplete(clefable =  T))
+hax(autocomplete(feraligatr =  T))w
+hax(autocomplete(clefable =  T))
+hax(autocomplete(feraligatr =  T))
+hax(autocomplete(skeledirge =  T))w(5/5)
+hax(autocomplete(ampharos =  T))
+hax(autocomplete(tentacruel =  T))
+hax(autocomplete(typhlosion =  T))w
+hax(autocomplete(talonflame =  T))
+hax(autocomplete(feraligatr =  T))
+hax(autocomplete(`giratina (altered)` =  T))w
+hax(autocomplete(genesect =  T))
+hax(autocomplete(feraligatr =  T))
+hax(autocomplete(golem =  T))l
+hax(autocomplete(guzzlord =  T))
+hax(autocomplete(feraligatr =  T))
+hax(autocomplete(annihilape =  T))l
+hax(autocomplete(clefable =  T))
+hax(autocomplete(heliolisk =  T))
+hax(autocomplete(goodra =  T))l
+hax(autocomplete( T))
+hax(autocomplete( T))
+hax(autocomplete( T))
+hax(autocomplete( T))
+hax(autocomplete( T))
 hax(autocomplete( T))
 hax(autocomplete( T))
 hax(autocomplete( T))
