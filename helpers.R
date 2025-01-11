@@ -191,7 +191,7 @@ type_lookup_atk <- function(name){
 
     movestrengths <- moves %>%
         filter(Category == 'Charged Attack') %>%
-        mutate(str = case_when(Damage > 90 ~ 'h',
+        mutate(str = case_when(Damage >= 85 ~ 'h',
                                Damage < 70 ~ 'l',
                                TRUE ~ 'm')) %>%
         pull(str)

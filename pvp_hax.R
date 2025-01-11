@@ -7,17 +7,21 @@ library(readr)
 library(crayon)
 library(stringr)
 
-setwd('~/git/pokehax')
+# setwd('~/git/pokehax')
+setwd('C:/Users/vlahm/Desktop/git/pokehax/')
 
 # setup ####
 
 all_types <- read_csv('data/ul.csv', show_col_types = FALSE) %>%
+# all_types <- read_csv('data/cp1500_all_leads_rankings.csv', show_col_types = FALSE) %>%
+# all_types <- read_csv('data/cp1500_color_leads_rankings.csv', show_col_types = FALSE) %>%
     rename(Name = Pokemon) %>%
     # filter(! grepl('(Shadow)', Name)) %>%
     mutate(Name = tolower(Name),
            `Type 2` = if_else(`Type 2` == 'none', '', `Type 2`),
            `Type 1` = str_to_sentence(`Type 1`),
-           `Type 2` = str_to_sentence(`Type 2`))
+           `Type 2` = str_to_sentence(`Type 2`)) %>%
+    distinct(Name, .keep_all = TRUE)
 
 moves <- read_csv('data/moves.csv', show_col_types = FALSE)
 
@@ -90,36 +94,56 @@ quick_mapping <- c(gr = 'Grass',
 #GL
 
 team_atk <- list(
-    Clefable = c("Fairy", "Normal", "Fairy"),
+
     # Poliwrath = c("Fighting", "Water", "Ice"),
     # Poliwrath = c("Fighting", "Water", "Fighting"),
     # Leafeon = c('Normal', 'Grass', 'Grass'),
     # Steelix = c("Electric", "Psychic", "Dark"),
-    Steelix = c("Electric", "Steel", "Dark"),
-    Clodsire = c("Poison", "Rock", "Ground")
+
+    #GL
+    # # Gastrodon = c('Ground', 'Ground', 'Normal'),
+    # Primeape = c('Fighting', 'Ghost', 'Fighting'),
+    # Mandibuzz = c('Dark', 'Flying', 'Dark'),
+    # Clodsire = c("Poison", "Rock", "Ground")
+    # # Miltank = c('Rock', 'Electric', 'Normal')
+
+    #UL
+    # Clefable = c("Fairy", "Normal", "Fairy"),
+    # Steelix = c("Electric", "Steel", "Dark"),
+    # Clodsire = c("Poison", "Rock", "Ground")
+    Giratina = c('Ghost', 'Dragon', 'Ghost'),
+    # Annihilape = c('Fighting', 'Ghost', 'Fighting'),
+    Feraligatr = c('Ghost', 'Water', 'Ice'),
+    Typhlosion = c('Fire', 'Fire', 'Electric')
+
+    # color cup
+    # Gastrodon = c('Ground', 'Ground', 'Normal'),
+    # `Marowak (Alolan)` = c('Fire', 'Ghost', 'Ground'),
+    # Amoongus = c('Ghost', 'Grass', 'Poison')
 )
 
 team_def <- list(
-    Clefable = 'Fairy',
-    Steelix = c("Steel", "Ground"),
     # Poliwrath = c('Water', 'Fighting'),
     # Leafeon = 'Grass',
-    Clodsire = c('Poison', 'Ground')
-)
 
-#UL
+    #GL
+    # # Gastrodon = c('Ground', 'Water'),
+    # Primeape = 'Fighting',
+    # Mandibuzz = c('Dark', 'Flying'),
+    # Clodsire = c('Poison', 'Ground')
+    # # Miltank = c('Normal')
 
-team_atk <- list(
-    Giratina = c('Ghost', 'Dragon', 'Ghost'),
-    Typhlosion = c('Fire', 'Fire', 'Electric'),
-    # Annihilape = c('Fighting', 'Ghost', 'Fighting'),
-    Feraligatr = c('Ghost', 'Water', 'Ice')
-)
-
-team_def <- list(
+    #UL
+    # Clefable = 'Fairy',
+    # Steelix = c("Steel", "Ground"),
+    # Clodsire = c('Poison', 'Ground')
     Giratina = c('Ghost', 'Dragon'),
-    Typhlosion = c('Fire'),
+    Feraligatr = c('Water'),
+    Typhlosion = c('Fire')
     # Annihilape = c('Fighting', 'Ghost'),
-    Feraligatr = c('Water')
-)
 
+    #color cup
+    # Gastrodon = c('Ground', 'Ground', 'Normal'),
+    # `Marowak (Alolan)` = c('Ghost', 'Fire'),
+    # Amoongus = c('Grass', 'Poison')
+)
