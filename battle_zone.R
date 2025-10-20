@@ -453,18 +453,32 @@ hax(autocomplete(annihilape =  T))l
 hax(autocomplete(clefable =  T))
 hax(autocomplete(heliolisk =  T))
 hax(autocomplete(goodra =  T))l
-hax(autocomplete( T))
-hax(autocomplete( T))
-hax(autocomplete( T))
-hax(autocomplete( T))
-hax(autocomplete( T))
-hax(autocomplete( T))
-hax(autocomplete( T))
-hax(autocomplete( T))
-hax(autocomplete( T))
-hax(autocomplete( T))
-hax(autocomplete( T))
-hax(autocomplete( T))
+#new gl schnecke team (furret, greninja, kommo-o)
+hax(autocomplete(mandibuzz =   T))
+hax(autocomplete(melmetal =  T))
+hax(autocomplete(`golem (alolan) (shadow)` =  T))w
+hax(autocomplete(hariyama =  T))
+hax(autocomplete(greedent =  T))
+hax(autocomplete(clodsire =  T))l
+hax(autocomplete(ariados =  T))
+hax(autocomplete(bellibolt =  T))
+hax(autocomplete(beedrill =  T))l
+hax(autocomplete(poliwrath =  T))
+hax(autocomplete(runerigus =  T))
+hax(autocomplete(charjabug =  T))w (2/5)
+hax(autocomplete(samurott =  T))
+hax(autocomplete(machamp =  T))
+hax(autocomplete(dragapult =  T))w
+hax(autocomplete(greninja =  T))
+hax(autocomplete(clodsire =  T))
+hax(autocomplete(typhlosion =  T))w
+hax(autocomplete(drifblim =  T))
+hax(autocomplete(quagsire =  T))w
+hax(autocomplete(celebi =  T))
+hax(autocomplete(obstagoon =  T))
+hax(autocomplete(poliwrath =  T))l
+hax(autocomplete(charizard =  T))
+hax(autocomplete(lucario =  T))l
 hax(autocomplete( T))
 hax(autocomplete( T))
 hax(autocomplete( T))

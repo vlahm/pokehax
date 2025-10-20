@@ -7,12 +7,12 @@ library(readr)
 library(crayon)
 library(stringr)
 
-# setwd('~/git/pokehax')
-setwd('C:/Users/vlahm/Desktop/git/pokehax/')
+setwd('~/git/pokehax')
+# setwd('C:/Users/vlahm/Desktop/git/pokehax/')
 
 # setup ####
 
-all_types <- read_csv('data/ul.csv', show_col_types = FALSE) %>%
+all_types <- read_csv('data/cp1500_remix_overall_rankings.csv', show_col_types = FALSE) %>%
 # all_types <- read_csv('data/cp1500_all_leads_rankings.csv', show_col_types = FALSE) %>%
 # all_types <- read_csv('data/cp1500_color_leads_rankings.csv', show_col_types = FALSE) %>%
     rename(Name = Pokemon) %>%
@@ -106,15 +106,18 @@ team_atk <- list(
     # Mandibuzz = c('Dark', 'Flying', 'Dark'),
     # Clodsire = c("Poison", "Rock", "Ground")
     # # Miltank = c('Rock', 'Electric', 'Normal')
+    Furret = c('Dark', 'Normal', 'Grass'),
+    Greninja = c('Water', 'Water', 'Dark'),
+    `Kommo-o` = c('Dragon', 'Dragon')
 
     #UL
-    # Clefable = c("Fairy", "Normal", "Fairy"),
-    # Steelix = c("Electric", "Steel", "Dark"),
-    # Clodsire = c("Poison", "Rock", "Ground")
-    Giratina = c('Ghost', 'Dragon', 'Ghost'),
-    # Annihilape = c('Fighting', 'Ghost', 'Fighting'),
-    Feraligatr = c('Ghost', 'Water', 'Ice'),
-    Typhlosion = c('Fire', 'Fire', 'Electric')
+    # # Clefable = c("Fairy", "Normal", "Fairy"),
+    # # Steelix = c("Electric", "Steel", "Dark"),
+    # # Clodsire = c("Poison", "Rock", "Ground")
+    # Giratina = c('Ghost', 'Dragon', 'Ghost'),
+    # # Annihilape = c('Fighting', 'Ghost', 'Fighting'),
+    # Feraligatr = c('Ghost', 'Water', 'Ice'),
+    # Typhlosion = c('Fire', 'Fire', 'Electric')
 
     # color cup
     # Gastrodon = c('Ground', 'Ground', 'Normal'),
@@ -132,15 +135,18 @@ team_def <- list(
     # Mandibuzz = c('Dark', 'Flying'),
     # Clodsire = c('Poison', 'Ground')
     # # Miltank = c('Normal')
+    Furret = c('Normal'),
+    Greninja = c('Water', 'Dark'),
+    `Kommo-o` = c('Dragon', 'Fighting')
 
     #UL
-    # Clefable = 'Fairy',
-    # Steelix = c("Steel", "Ground"),
-    # Clodsire = c('Poison', 'Ground')
-    Giratina = c('Ghost', 'Dragon'),
-    Feraligatr = c('Water'),
-    Typhlosion = c('Fire')
-    # Annihilape = c('Fighting', 'Ghost'),
+    # # Clefable = 'Fairy',
+    # # Steelix = c("Steel", "Ground"),
+    # # Clodsire = c('Poison', 'Ground')
+    # Giratina = c('Ghost', 'Dragon'),
+    # Feraligatr = c('Water'),
+    # Typhlosion = c('Fire')
+    # # Annihilape = c('Fighting', 'Ghost'),
 
     #color cup
     # Gastrodon = c('Ground', 'Ground', 'Normal'),
